@@ -1,4 +1,6 @@
-﻿using ServiceAgent.Spoonacular;
+﻿
+using ServiceAgent.Recipes;
+using ServiceAgent.Spoonacular;
 
 namespace TestSA
 {
@@ -6,11 +8,26 @@ namespace TestSA
     {
         static void Main(string[] args)
         {
-            Spoonacular_Interface IS = new SpoonacularApiClient();
+            IRecipes IS = new RecipesSpoonacular();
 
-            Recipe r = IS.SearchRecipes("chicken").GetAwaiter().GetResult();
+            //Recipe r = IS.SearchRecipes("chicken").GetAwaiter().GetResult();
 
-            Console.WriteLine(r);
+            // Console.WriteLine(r);
+
+            //List<InstructionsComponents> instructionsComponents = IS.getRecipeInstructions(4632).GetAwaiter().GetResult();
+
+            //InstructionsComponents firstInstruction = instructionsComponents.FirstOrDefault();
+            //if (firstInstruction != null)
+            //{
+            //    List<Steps> steps = firstInstruction.steps;
+            //    foreach (var step in steps)
+            //    {
+            //        Console.WriteLine($"Step {step.number}: {step.step}");
+            //    }
+            //}
+  
+
+
         }
     }
 }
