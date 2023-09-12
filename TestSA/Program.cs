@@ -26,7 +26,7 @@ namespace TestSA
             //    }
             //}
   
-
+            Recipe recipe = IS.SearchRecipesByIngredients(new List<string>{"apples","flour","sugar"}).GetAwaiter().GetResult();
 
         }
     }

@@ -11,7 +11,7 @@ namespace ServiceAgent.Spoonacular
     public interface IRecipes
     {
         Task<Recipe> SearchRecipes(string ingredients);
-        Task<Recipe> SearchRecipesByIngredients(string ingredients);
+        Task<Recipe> SearchRecipesByIngredients(List<string> ingredients);
 
         Task<List<InstructionsComponents>> getRecipeInstructions(int idRecipe);
 

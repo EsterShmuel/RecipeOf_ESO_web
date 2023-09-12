@@ -51,9 +51,47 @@ public class RecipesSpoonacular :IRecipes
         }
     }
 
-    public Task<Recipe> SearchRecipesByIngredients(string ingredients)
+    public async Task<Recipe> SearchRecipesByIngredients(List<string> ingredients)
     {
-        throw new NotImplementedException();
+        // Define the base URL for the Spoonacular API
+        string baseUrl = "https://api.spoonacular.com/recipes/findByIngredients";
+
+        // Create a query string with parameters (e.g., query for 'yogurt')
+        string queryString = $"?apiKey={_apiKey}&ingredients={string.Join(",", ingredients)}";
+
+        // Combine the base URL and query string
+        string apiUrl = $"{baseUrl}{queryString}";
+
+        try
+        {
+            // Make the GET request to the API
+            HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+
+            // Check if the request was successful
+            if (response.IsSuccessStatusCode)
+            {
+                // Read the response json as a string
+                string json = await response.Content.ReadAsStringAsync();
+
+                // Deserialize the JSON into a Recipe object
+                List<Result> results = JsonConvert.DeserializeObject<List<Result>>(json);
+
+                Recipe recip = new Recipe();
+                recip.Results = results;
+                recip.TotalResults= results.Count;
+
+                return recip;
+            }
+            else
+            {
+                throw new HttpRequestException($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+            }
+        }
+        catch (HttpRequestException e)
+        {
+            throw new HttpRequestException($"HTTP Request Error: {e.Message}");
+        }
+    
     }
 
     public async Task<List<InstructionsComponents>> getRecipeInstructions(int idRecipe)
