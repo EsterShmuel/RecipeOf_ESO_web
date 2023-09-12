@@ -9,10 +9,13 @@ using ServiceAgent.Recipes;
 
 public class RecipesSpoonacular :IRecipes
 {
+    #region Class variables
     private readonly HttpClient _httpClient = new HttpClient();
     private readonly string _apiKey = "4e54bb8497764522a39eab709efe0636";
+    #endregion
 
-    //Recipe search by keywords - components/equipment and more
+
+    #region Recipe search by keywords - components/equipment and more
     public async Task<Recipe> SearchRecipes(string key_word)
     {
         // Define the base URL for the Spoonacular API
@@ -50,13 +53,15 @@ public class RecipesSpoonacular :IRecipes
             throw new HttpRequestException($"HTTP Request Error: {e.Message}");
         }
     }
+    #endregion
 
+    #region Search recipes by ingredients
     public async Task<Recipe> SearchRecipesByIngredients(List<string> ingredients)
     {
         // Define the base URL for the Spoonacular API
         string baseUrl = "https://api.spoonacular.com/recipes/findByIngredients";
 
-        // Create a query string with parameters (e.g., query for 'yogurt')
+        // Create a query string with parameters in List string (e.g., query for 'yogurt')
         string queryString = $"?apiKey={_apiKey}&ingredients={string.Join(",", ingredients)}";
 
         // Combine the base URL and query string
@@ -73,9 +78,10 @@ public class RecipesSpoonacular :IRecipes
                 // Read the response json as a string
                 string json = await response.Content.ReadAsStringAsync();
 
-                // Deserialize the JSON into a Recipe object
+                // Deserialize the JSON into a List of Result object
                 List<Result> results = JsonConvert.DeserializeObject<List<Result>>(json);
 
+                //Remove the results to List in Recipe
                 Recipe recip = new Recipe();
                 recip.Results = results;
                 recip.TotalResults= results.Count;
@@ -93,13 +99,16 @@ public class RecipesSpoonacular :IRecipes
         }
     
     }
+    #endregion
 
+    #region vReturning a list of instructions and ingredients according to recipe ID
+            (Does not include amount for each ingredient)
     public async Task<List<InstructionsComponents>> getRecipeInstructions(int idRecipe)
     {
         // Define the base URL for the Spoonacular API
         string baseUrl = "https://api.spoonacular.com/recipes/";
 
-        // Create a query string with parameters (e.g., query for 'yogurt')
+        // Create a query string by adding the id of the recipe
         string queryString = $"{idRecipe}/analyzedInstructions?apiKey={_apiKey}";
 
         // Combine the base URL and query string
@@ -107,15 +116,16 @@ public class RecipesSpoonacular :IRecipes
 
         try
         {
+            // Make the GET request to the API
             HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
 
             // Check if the request was successful
             if (response.IsSuccessStatusCode)
             {
+                //// Read the response json as a string
                 string json = await response.Content.ReadAsStringAsync();
 
-                // Deserialize the JSON into a Recipe object
-                //InstructionsComponents instructionsComponents = JsonConvert.DeserializeObject<InstructionsComponents>(json);
+                // Deserialize the JSON into a InstructionsComponents object
                 List<InstructionsComponents> instructionsList = JsonConvert.DeserializeObject<List<InstructionsComponents>>(json);
               
 
@@ -133,15 +143,16 @@ public class RecipesSpoonacular :IRecipes
         }
 
     }
+    #endregion
 
-
+    #region Returning a list of ingredients with a quantity for each ingredient
     public async Task<ListComponent> IngredientsAmount(int idRecipe)
 
     {
+        // Define the base URL for the Spoonacular API
         string baseUrl = "https://api.spoonacular.com/recipes/";
 
-        // Create a query string with parameters (e.g., query for 'yogurt')
-
+        // Create a query string by adding the id of the recipe
         string queryString = $"{idRecipe}/ingredientWidget.json?apiKey={_apiKey}";
 
         // Combine the base URL and query string
@@ -149,13 +160,16 @@ public class RecipesSpoonacular :IRecipes
 
         try
         {
+            // Make the GET request to the API
             HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
 
             // Check if the request was successful
             if (response.IsSuccessStatusCode)
             {
+                // Read the response json as a string
                 string json = await response.Content.ReadAsStringAsync();
 
+                // Deserialize the JSON into a ListComponent object
                 ListComponent components = JsonConvert.DeserializeObject<ListComponent>(json);
 
                 return components;
@@ -173,8 +187,8 @@ public class RecipesSpoonacular :IRecipes
             throw new HttpRequestException($"HTTP Request Error: {e.Message}");
         }
     }
+    #endregion
 
-    
 
 
 
