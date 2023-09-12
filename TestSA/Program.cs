@@ -1,6 +1,5 @@
 ﻿
 using ServiceAgent.Recipes;
-using ServiceAgent.Spoonacular;
 
 namespace TestSA
 {
