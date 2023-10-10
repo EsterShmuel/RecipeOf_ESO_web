@@ -102,7 +102,7 @@ public class RecipesSpoonacular :IRecipes
     #endregion
 
     #region vReturning a list of instructions and ingredients according to recipe ID (Does not include amount for each ingredient)
-    public async Task<List<InstructionsComponents>> getRecipeInstructions(int idRecipe)
+    public async Task<InstructionsComponents> getRecipeInstructions(int idRecipe)
     {
         // Define the base URL for the Spoonacular API
         string baseUrl = "https://api.spoonacular.com/recipes/";
@@ -128,7 +128,7 @@ public class RecipesSpoonacular :IRecipes
                 List<InstructionsComponents> instructionsList = JsonConvert.DeserializeObject<List<InstructionsComponents>>(json);
                  InstructionsComponents firstInstruction = instructionsList.FirstOrDefault();
 
-                return instructionsList;
+                return firstInstruction;
             }
             else
             {

@@ -13,7 +13,7 @@ namespace ServiceAgent.Recipes
         Task<Recipe> SearchRecipes(string ingredients);
         Task<Recipe> SearchRecipesByIngredients(List<string> ingredients);
 
-        Task<List<InstructionsComponents>> getRecipeInstructions(int idRecipe);
+        Task<InstructionsComponents> getRecipeInstructions(int idRecipe);
 
         Task<ListComponent> IngredientsAmount(int idRecipe);
     }

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\recipeOf_ESO_web\recipeOf_ESO_web.csproj" />
     <ProjectReference Include="..\ServiceAgent\ServiceAgent.csproj" />
   </ItemGroup>
 
