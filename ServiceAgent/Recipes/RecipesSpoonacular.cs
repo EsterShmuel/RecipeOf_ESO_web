@@ -1,4 +1,4 @@
-﻿using ServiceAgent.Spoonacular;
+﻿using ServiceAgent.Recipes;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -127,7 +127,7 @@ public class RecipesSpoonacular :IRecipes
 
                 // Deserialize the JSON into a InstructionsComponents object
                 List<InstructionsComponents> instructionsList = JsonConvert.DeserializeObject<List<InstructionsComponents>>(json);
-                InstructionsComponents firstInstruction = instructionsList.FirstOrDefault();
+              
 
                 return firstInstruction;
             }

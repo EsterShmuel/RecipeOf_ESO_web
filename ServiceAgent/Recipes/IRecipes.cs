@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceAgent.Spoonacular
+namespace ServiceAgent.Recipes
 {
     public interface IRecipes
     {
