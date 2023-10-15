@@ -14,7 +14,6 @@ public class RecipesSpoonacular :IRecipes
     private readonly string _apiKey = "4e54bb8497764522a39eab709efe0636";
     #endregion
 
-
     #region Recipe search by keywords - components/equipment and more
     public async Task<Recipe> SearchRecipes(string key_word)
     {
@@ -101,7 +100,7 @@ public class RecipesSpoonacular :IRecipes
     }
     #endregion
 
-    #region vReturning a list of instructions and ingredients according to recipe ID
+    #region Returning a list of instructions and ingredients according to recipe ID
             //(Does not include amount for each ingredient)
     public async Task<InstructionsComponents> getRecipeInstructions(int idRecipe)
     {
@@ -127,7 +126,7 @@ public class RecipesSpoonacular :IRecipes
 
                 // Deserialize the JSON into a InstructionsComponents object
                 List<InstructionsComponents> instructionsList = JsonConvert.DeserializeObject<List<InstructionsComponents>>(json);
-              
+                InstructionsComponents firstInstruction = instructionsList.FirstOrDefault();
 
                 return firstInstruction;
             }
@@ -188,6 +187,7 @@ public class RecipesSpoonacular :IRecipes
         }
     }
     #endregion
+
 
 
 
