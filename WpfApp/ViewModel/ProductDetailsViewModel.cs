@@ -10,6 +10,50 @@ using WpfApp.Models;
 
 namespace WpfApp.ViewModel
 {
+    public class ProductImagesRepository
+    {
+        internal void DeleteProductImagesByProductId(int id)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    internal class ProductsRepository
+    {
+        internal void DeleteProductById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void UpdateProduct(Product product)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class ProducersRepository
+    {
+        internal IEnumerable<object> GetAllProducers()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal IEnumerable<object> GetAllProducersByCategoryId(int categoryId)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class CategoriesRepository
+    {
+        internal IEnumerable<object> GetAllCategories()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class BankAccountsRepository
+    {
+    }
     internal class ProductDetailsViewModel : ObservableObject
     {
         private readonly ProductImagesRepository _productImagesRepository;
@@ -93,14 +137,14 @@ namespace WpfApp.ViewModel
             Producers.Clear();
             var producers = _producersRepository.GetAllProducers();
             foreach (var producer in producers)
-                Producers.Add(producer);
+                Producers.Add((Producer)producer);
         }
         private void LoadCategories()
         {
             Categories.Clear();
             var categories = _categoriesRepository.GetAllCategories();
             foreach (var category in categories)
-                Categories.Add(category);
+                Categories.Add((Category)category);
         }
         private void LoadProducersByCategoryId(int categoryId)
         {
@@ -109,7 +153,7 @@ namespace WpfApp.ViewModel
                 Producers.Clear();
                 var producers = _producersRepository.GetAllProducersByCategoryId(categoryId);
                 foreach (var producer in producers)
-                    Producers.Add(producer);
+                    Producers.Add((Producer)producer);
                 OnPropertyChanged("Producers");
             }
             else
@@ -233,4 +277,6 @@ namespace WpfApp.ViewModel
 
         #endregion
     }
+
+
 }
